@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emoji Picker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Emoji Picker Project</h2>
+
+    <div class="input-box">
+      <input type="text" id="textInput" placeholder="Type something...">
+      <button id="emojiBtn">😊</button>
+    </div>
+
+    <!-- Emoji Panel -->
+    <div id="emojiPanel" class="emoji-panel hidden">
+      <!-- Search bar -->
+      <input type="text" id="emojiSearch" placeholder="Search emoji..." />
+
+      <div id="emojiList" class="emoji-list">
+        <span data-keywords="smile happy">😀</span>
+        <span data-keywords="laugh funny happy">😂</span>
+        <span data-keywords="love heart eyes">😍</span>
+        <span data-keywords="think confused">🤔</span>
+        <span data-keywords="cool sunglasses">😎</span>
+        <span data-keywords="cry sad">😭</span>
+        <span data-keywords="thumbs up like">👍</span>
+        <span data-keywords="fire hot lit">🔥</span>
+        <span data-keywords="heart love">❤️</span>
+        <span data-keywords="party celebration">🥳</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="emoji.js"></script>
+</body>
+</html>

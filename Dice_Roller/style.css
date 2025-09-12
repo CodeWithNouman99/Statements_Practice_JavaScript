@@ -1,0 +1,81 @@
+/* Body */
+body {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Main container */
+.container {
+  background: #fff;
+  width: 420px;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Heading */
+.heading {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Control section */
+.control input,
+.control select {
+  padding: 10px;
+  font-size: 1rem;
+  margin: 5px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+}
+
+.control button {
+  padding: 10px 18px;
+  margin: 5px;
+  border: none;
+  border-radius: 8px;
+  background: #667eea;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.control button:hover {
+  background: #5a67d8;
+}
+
+/* Result section */
+.result {
+  margin-top: 20px;
+  text-align: left;
+}
+
+#diceArea {
+  padding: 12px;
+  background: #f9f9f9;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  min-height: 40px;
+}
+
+#total {
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+#history {
+  list-style: square inside;
+  padding-left: 10px;
+  max-height: 100px;
+  overflow-y: auto;
+}

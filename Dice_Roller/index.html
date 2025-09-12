@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Roller Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <h1 class="heading">Die Roll and Test your Luck</h1>
+  
+  <section class="control">
+    <!-- Number of dice -->
+    <input type="number" id="diceCount" placeholder="Number of Dice" min="1" max="10">
+
+    <!-- Dice sides -->
+    <select id="diceSides">
+      <option value="6">6 sides</option>
+      <option value="8">8 sides</option>
+      <option value="12">12 sides</option>
+      <option value="20">20 sides</option>
+    </select>
+
+    <!-- Buttons -->
+    <button id="rollBtn">Roll</button>
+    <button id="resetBtn">Reset</button>
+  </section>
+
+  <section class="result">
+    <!-- Dice output -->
+    <div id="diceArea">Your dice will appear here..</div>
+
+    <!-- Total score -->
+    <div id="total">Total: 0</div>
+
+    <!-- Roll history -->
+    <h3>History</h3>
+    <ul id="history"></ul>
+  </section>
+</div>
+
+</body>
+</html>

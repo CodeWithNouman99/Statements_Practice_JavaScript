@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nouman Aslam - Frontend Developer</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- AOS Library for animations -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#">Nouman Aslam</a>
+      <nav class="nav" id="nav">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="controls">
+        <button id="themeToggle" class="btn icon-btn">🌙</button>
+        <button id="menuToggle" class="btn icon-btn mobile-only">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <div class="container hero-grid">
+      <div class="hero-text" data-aos="fade-right">
+        <h1>Hello, I’m <span class="highlight">Nouman Aslam</span></h1>
+        <h2 class="typing">Frontend Developer</h2>
+        <p>
+          I create modern, responsive and user-friendly web applications. My focus is on clean design, smooth animations, and writing code that’s easy to maintain. I enjoy turning ideas into beautiful digital experiences.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn" href="#projects">View My Work</a>
+          <a class="btn ghost" href="#contact">Get in Touch</a>
+        </div>
+      </div>
+      <div class="hero-photo" data-aos="fade-left">
+        <img src="/pic.jpg" alt="Nouman Aslam profile photo" />
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="section glass" data-aos="fade-up">
+    <div class="container">
+      <h2>About Me</h2>
+      <p>
+        I am a passionate developer with strong interest in frontend technologies. I enjoy building interactive websites that combine aesthetics with functionality. My goal is to continuously learn, stay updated with modern web practices, and deliver impactful user experiences.
+      </p>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" class="section" data-aos="fade-up">
+    <div class="container">
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div class="skill">HTML5</div>
+        <div class="skill">CSS3</div>
+        <div class="skill">JavaScript (ES6+)</div>
+        <div class="skill">Responsive Design</div>
+        <div class="skill">Git & GitHub</div>
+        <div class="skill">React (Beginner)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects" class="section glass" data-aos="fade-up">
+    <div class="container">
+      <h2>Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card" data-aos="zoom-in">
+          <h3>Blog Website</h3>
+          <p>
+            A modern blog platform featuring categories, search functionality, and responsive layout. Built with HTML, CSS, and JavaScript to showcase clean typography and readability.
+          </p>
+          <a href="https://github.com/CodeWithNouman99" target="_blank" class="btn small">View on GitHub</a>
+        </div>
+        <div class="project-card" data-aos="zoom-in" data-aos-delay="100">
+          <h3>Recipe App</h3>
+          <p>
+            A recipe search app where users can explore recipes by ingredients or keywords. Designed mobile-first with focus on usability, quick search, and easy-to-read instructions.
+          </p>
+          <a href="https://github.com/CodeWithNouman99" target="_blank" class="btn small">View on GitHub</a>
+        </div>
+        <div class="project-card" data-aos="zoom-in" data-aos-delay="200">
+          <h3>Gym Website</h3>
+          <p>
+            A landing page for a fitness center featuring trainer profiles, pricing plans, and a contact form. Focused on conversion design with strong visuals and smooth animations.
+          </p>
+          <a href="https://github.com/CodeWithNouman99" target="_blank" class="btn small">View on GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section id="education" class="section" data-aos="fade-up">
+    <div class="container">
+      <h2>Education</h2>
+      <ul>
+        <li><strong>Matric:</strong> Govt Comprehensive Higher Secondary School — 1030/1100 (A+)</li>
+        <li><strong>Intermediate:</strong> Govt Science College — 700/1100</li>
+        <li><strong>B.S. Software Engineering (2023–2027):</strong> University of Agriculture Faisalabad</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section glass" data-aos="fade-up">
+    <div class="container">
+      <h2>Contact</h2>
+      <p>
+        Feel free to reach out to me for collaborations, freelance projects, or just to say hi. I’m always open to discussing exciting opportunities in web development.
+      </p>
+      <p><strong>Phone:</strong> <a href="tel:+923401504112">+92 340 1504112</a></p>
+      <p><strong>Email:</strong> <a href="mailto:mrnoumannomi7@gmail.com">mrnoumannomi7@gmail.com</a></p>
+      <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/nouman-aslam-a9a3a2333" target="_blank">Profile</a></p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Nouman Aslam. All Rights Reserved.</p>
+  </footer>
+
+  <script src="portfolio.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init();</script>
+</body>
+</html>

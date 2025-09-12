@@ -1,0 +1,88 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Background */
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #fff;
+}
+
+/* Container */
+.container {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 40px;
+  border-radius: 25px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  width: 340px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Header */
+.header {
+  font-size: 26px;
+  margin-bottom: 18px;
+  color: #f5f5f5;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* Timer Display */
+.timer {
+  font-size: 60px;
+  font-weight: bold;
+  margin: 25px 0;
+  color: #00f5d4;
+  text-shadow: 0 0 10px #00f5d4, 0 0 20px #00f5d4, 0 0 40px #00f5d4;
+}
+
+/* Buttons Wrapper */
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+/* Button Base Style */
+button {
+  flex: 1;
+  padding: 12px 0;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  color: white;
+}
+
+/* Individual Button Colors (neon look) */
+button.one {
+  background: #06d6a0;
+  box-shadow: 0 0 10px #06d6a0, 0 0 20px #06d6a0;
+}
+button.two {
+  background: #ffd166;
+  color: #222;
+  box-shadow: 0 0 10px #ffd166, 0 0 20px #ffd166;
+}
+button.three {
+  background: #ef476f;
+  box-shadow: 0 0 10px #ef476f, 0 0 20px #ef476f;
+}
+
+/* Hover Effects */
+button:hover {
+  transform: translateY(-3px);
+  opacity: 0.9;
+}

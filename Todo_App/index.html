@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To Do List</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="todolist">
+        <h2>
+          To-Do List
+          <img
+            src="https://up.yimg.com/ib/th/id/OIP.rLtvCa0XKqNHLWWKw2zJrQHaIV?pid=Api&rs=1&c=1&qlt=95&w=93&h=104"
+            alt=""
+          />
+        </h2>
+        <div class="row">
+          <input type="text" id="inputbox" placeholder="Add Your Text Here" />
+          <button onclick="addTask()">Add</button>
+        </div>
+        <ul id="listContainer">
+          <li class="checked">Task 1</li>
+          <li>Task 2</li>
+            <li>Task 3</li>
+        </ul>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

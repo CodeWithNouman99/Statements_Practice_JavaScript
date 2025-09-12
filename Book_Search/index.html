@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BookShowcase — Explore Books</title>
+  <style>
+    /* -------------------------
+       RESET & BASE
+       ------------------------- */
+    :root{
+      --bg-1:#05060a;
+      --bg-2:#0f1220;
+      --card:#0f1724;
+      --muted:#9aa3b2;
+      --accent1:#7c4dff;
+      --accent2:#00e5c4;
+      --glass: rgba(255,255,255,0.05);
+      --glass-strong: rgba(255,255,255,0.08);
+      --radius:14px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(124,77,255,0.06), transparent),
+                  radial-gradient(900px 400px at 90% 90%, rgba(0,229,196,0.04), transparent),
+                  linear-gradient(180deg,var(--bg-1),var(--bg-2));
+      color:#e6eef7;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      gap:1.25rem;
+      padding-bottom:3.5rem;
+    }
+
+    /* -------------------------
+       APP SHELL / NAV
+       ------------------------- */
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      padding:1rem 1.5rem;
+      position:sticky;
+      top:0;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      backdrop-filter: blur(8px);
+      z-index:40;
+      border-bottom:1px solid rgba(255,255,255,0.03);
+    }
+    .brand{
+      display:flex;
+      gap:.8rem;
+      align-items:center;
+      font-weight:700;
+      letter-spacing:.2px;
+    }
+    .brand .logo{
+      width:44px;height:44px;border-radius:10px;
+      background:linear-gradient(135deg,var(--accent1),var(--accent2));
+      display:grid;place-items:center;font-size:1.05rem;
+      box-shadow:0 6px 24px rgba(124,77,255,0.12);
+    }
+    nav.controls{display:flex;align-items:center;gap:1rem}
+
+    .tab{
+      color:var(--muted);
+      padding:.45rem .7rem;
+      border-radius:10px;
+      text-decoration:none;
+      cursor:pointer;
+      font-weight:600;
+      transition:all .18s ease;
+      background:transparent;
+    }
+    .tab.active{ color:#071023; background:linear-gradient(90deg,var(--accent1),var(--accent2)); box-shadow:0 8px 30px rgba(0,0,0,0.45) }
+
+    /* -------------------------
+       HERO / SEARCH
+       ------------------------- */
+    .hero{
+      margin: 0 1.5rem;
+      display:flex;
+      gap:1rem;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .hero-left{
+      max-width:680px;
+    }
+    .title{
+      font-size:clamp(1.4rem,2.8vw,2.4rem);
+      font-weight:800;color:linear-gradient(90deg,#fff,#ddd);
+      background:linear-gradient(90deg,var(--accent1),var(--accent2));
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    .subtitle{ color:var(--muted); margin-top:.45rem; font-weight:500 }
+
+    .search-card{
+      margin-top:.9rem;
+      display:flex;
+      gap:.6rem;
+      background:var(--glass);
+      border-radius:999px;
+      padding:.45rem;
+      align-items:center;
+      width:100%;
+      max-width:720px;
+      border:1px solid rgba(255,255,255,0.04);
+      box-shadow:0 10px 30px rgba(2,6,23,0.6);
+    }
+    .search-card input{
+      background:transparent;border:0;outline:none;color:inherit;padding:.7rem .9rem;font-size:1rem;
+      flex:1;
+    }
+    .search-card .btn{
+      background:linear-gradient(90deg,var(--accent1),var(--accent2));
+      border:0;padding:.55rem .9rem;border-radius:999px;font-weight:700;color:#071023;cursor:pointer;
+      box-shadow:0 6px 20px rgba(124,77,255,0.12); transition:transform .14s;
+    }
+    .search-card .btn:active{transform:scale(.98)}
+
+    /* quick filters */
+    .filters{display:flex;gap:.5rem;margin-top:.7rem;flex-wrap:wrap}
+    .chip{padding:.35rem .6rem;border-radius:999px;background:rgba(255,255,255,0.02);color:var(--muted);font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,0.02)}
+
+    /* -------------------------
+       LAYOUT: CAROUSEL ROWS
+       ------------------------- */
+    main{padding:0 1.5rem;flex:1}
+    .row{margin:1rem 0}
+    .row-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem}
+    .row-title{font-weight:700;color:#dfe9f7}
+    .row-sub{color:var(--muted);font-size:.92rem}
+
+    .carousel{
+      display:flex;gap:1rem;overflow-x:auto;padding-bottom:.5rem;
+      scroll-behavior:smooth;
+      -webkit-overflow-scrolling:touch;
+    }
+    .carousel::-webkit-scrollbar{height:10px}
+    .carousel::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.06);border-radius:999px}
+    .card{
+      min-width:160px; max-width:160px;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border-radius:12px;padding:.6rem;cursor:pointer;transition:transform .22s,box-shadow .22s;
+      display:flex;flex-direction:column;gap:.55rem;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .card:hover{ transform:translateY(-8px); box-shadow:0 18px 40px rgba(2,6,23,0.6) }
+    .thumb{width:100%;height:220px;border-radius:8px;object-fit:cover;background:linear-gradient(180deg,#101226,#111026)}
+    .meta{display:flex;flex-direction:column;gap:.15rem}
+    .meta .title{font-size:.92rem;font-weight:700;color:#fff;line-height:1.1}
+    .meta .author{font-size:.82rem;color:var(--muted)}
+
+    /* scroll controls (small arrows) */
+    .row-controls{display:flex;gap:.4rem}
+    .arrow{
+      width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.03);display:grid;place-items:center;cursor:pointer;
+      border:1px solid rgba(255,255,255,0.03)
+    }
+
+    /* -------------------------
+       DETAILS PANEL (BOTTOM SLIDEUP)
+       ------------------------- */
+    .sheet{
+      position:fixed;left:50%;transform:translateX(-50%) translateY(110%);bottom:0;width:min(920px,96%);max-height:88vh;
+      background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border-radius:18px 18px 0 0;box-shadow:0 -20px 60px rgba(0,0,0,0.6);
+      padding:1.1rem;transition:transform .36s cubic-bezier(.2,.9,.2,1);z-index:70;backdrop-filter: blur(10px);
+    }
+    .sheet.open{ transform:translateX(-50%) translateY(0%) }
+
+    .sheet-grid{display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:start}
+    .sheet .cover{width:220px;height:320px;border-radius:12px;object-fit:cover;background:linear-gradient(180deg,#0b0d17,#151422)}
+    .sheet h2{font-size:1.3rem;margin-bottom:.3rem}
+    .row-meta{display:flex;gap:1rem;align-items:center;color:var(--muted);font-weight:600;margin-bottom:.6rem}
+    .desc{color:#cfd9e6;max-height:36vh;overflow:auto;padding-right:.6rem;line-height:1.5}
+
+    .sheet-actions{display:flex;gap:.6rem;margin-top:.9rem}
+    .btn-primary{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#071023;border:0;padding:.6rem .8rem;border-radius:10px;font-weight:800;cursor:pointer}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);padding:.55rem .75rem;border-radius:10px;cursor:pointer}
+
+    /* small helpers */
+    .badge{background:rgba(255,255,255,0.03);padding:.3rem .45rem;border-radius:8px;color:var(--muted);font-weight:700}
+
+    /* empty state */
+    .empty{
+      display:grid;place-items:center;padding:3rem;border-radius:12px;background:rgba(255,255,255,0.02);color:var(--muted)
+    }
+
+    /* responsive tweaks */
+    @media (max-width:880px){
+      .sheet-grid{grid-template-columns:160px 1fr}
+      .sheet .cover{width:160px;height:240px}
+      .card{min-width:140px;max-width:140px}
+    }
+    @media (max-width:560px){
+      .hero{flex-direction:column;align-items:flex-start;padding:0 1rem}
+      .search-card{width:100%}
+      .sheet{width:100%;border-radius:14px}
+      .sheet-grid{grid-template-columns:1fr;gap:.8rem}
+      .sheet .cover{width:100%;height:320px}
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <div class="logo">BG</div>
+      <div>
+        <div style="font-weight:800">BookShowcase</div>
+        <div style="font-size:.85rem;color:var(--muted);margin-top:2px">Discover • Save • Read</div>
+      </div>
+    </div>
+
+    <nav class="controls" aria-label="Main navigation">
+      <button class="tab active" data-tab="home">Home</button>
+      <button class="tab" data-tab="favorites">Favorites</button>
+      <button class="tab" data-tab="trending">Trending</button>
+      <button class="tab" data-tab="about">About</button>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="heroTitle">
+    <div class="hero-left">
+      <div id="heroTitle" class="title">Find your next great read</div>
+      <div class="subtitle">Search by title, author or keyword. Click a card for details — save favorites to view later.</div>
+
+      <div class="search-card" style="margin-top:12px">
+        <input id="searchInput" type="search" inputmode="search" placeholder="Try: 'Dune', 'Malcolm Gladwell', 'web development'">
+        <button id="searchBtn" class="btn" aria-label="Search">Search</button>
+      </div>
+
+      <div class="filters" style="margin-top:10px">
+        <div class="chip" data-filter="fiction">Fiction</div>
+        <div class="chip" data-filter="science">Science</div>
+        <div class="chip" data-filter="history">History</div>
+        <div class="chip" data-filter="technology">Technology</div>
+      </div>
+    </div>
+
+    <!-- small quick stats / placeholder -->
+    <div style="min-width:220px; text-align:right">
+      <div style="font-weight:700;font-size:1.05rem">Curated rows</div>
+      <div style="color:var(--muted);margin-top:.6rem">Trending picks, staff highlights, and your favorites.</div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT (rows) -->
+  <main id="appMain">
+    <!-- Search results row (visible when user searches) -->
+    <section class="row" id="searchRow" style="display:none">
+      <div class="row-header">
+        <div>
+          <div class="row-title">Search results</div>
+          <div class="row-sub" id="searchSub"></div>
+        </div>
+        <div class="row-controls">
+          <div class="arrow" data-target="searchRow" data-dir="left">&#9664;</div>
+          <div class="arrow" data-target="searchRow" data-dir="right">&#9654;</div>
+        </div>
+      </div>
+      <div class="carousel" id="searchCarousel" aria-live="polite"></div>
+    </section>
+
+    <!-- Trending row (prepopulated) -->
+    <section class="row" id="trendingRow">
+      <div class="row-header">
+        <div>
+          <div class="row-title">Trending now</div>
+          <div class="row-sub">What's popular this week</div>
+        </div>
+        <div class="row-controls">
+          <div class="arrow" data-target="trendingRow" data-dir="left">&#9664;</div>
+          <div class="arrow" data-target="trendingRow" data-dir="right">&#9654;</div>
+        </div>
+      </div>
+      <div class="carousel" id="trendingCarousel"></div>
+    </section>
+
+    <!-- Staff picks row -->
+    <section class="row" id="staffRow">
+      <div class="row-header">
+        <div>
+          <div class="row-title">Staff picks</div>
+          <div class="row-sub">Selected by the BookShowcase team</div>
+        </div>
+        <div class="row-controls">
+          <div class="arrow" data-target="staffRow" data-dir="left">&#9664;</div>
+          <div class="arrow" data-target="staffRow" data-dir="right">&#9654;</div>
+        </div>
+      </div>
+      <div class="carousel" id="staffCarousel"></div>
+    </section>
+
+    <!-- Favorites row (dynamically updated) -->
+    <section class="row" id="favoritesRow" style="display:none">
+      <div class="row-header">
+        <div>
+          <div class="row-title">Your Favorites</div>
+          <div class="row-sub">Saved locally on this device</div>
+        </div>
+        <div class="row-controls">
+          <div class="arrow" data-target="favoritesRow" data-dir="left">&#9664;</div>
+          <div class="arrow" data-target="favoritesRow" data-dir="right">&#9654;</div>
+        </div>
+      </div>
+      <div class="carousel" id="favoritesCarousel"></div>
+    </section>
+
+    <!-- About -->
+    <section class="row" id="aboutRow" style="display:none">
+      <div class="empty">
+        <div style="max-width:800px;text-align:center">
+          <h3 style="margin-bottom:.6rem">About BookShowcase</h3>
+          <p style="color:var(--muted);line-height:1.6">This demo uses the Google Books API to search and present books in cinematic rows. Save favorites locally. Built to demonstrate a modern, product-quality UI — responsive, accessible, and ready to be extended.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- BOTTOM DETAILS SHEET -->
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-hidden="true">
+    <div style="display:flex;justify-content:flex-end">
+      <button id="closeSheet" class="btn-ghost" aria-label="Close details">Close</button>
+    </div>
+    <div class="sheet-grid" id="sheetGrid">
+      <img id="sheetCover" class="cover" src="" alt="Book cover" />
+      <div>
+        <h2 id="sheetTitle">Title</h2>
+        <div class="row-meta">
+          <div id="sheetAuthor" class="badge">Author</div>
+          <div id="sheetYear" class="badge">Year</div>
+          <div id="sheetPages" class="badge">Pages</div>
+        </div>
+        <div id="sheetDesc" class="desc">Description</div>
+        <div class="sheet-actions">
+          <button id="saveFav" class="btn-primary">Save to favorites</button>
+          <a id="previewLink" class="btn-ghost" target="_blank" rel="noopener">Preview / Info</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* -------------------------
+       UTILS & STATE
+       ------------------------- */
+    const API_BASE = 'https://www.googleapis.com/books/v1/volumes';
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    const searchRow = document.getElementById('searchRow');
+    const searchCarousel = document.getElementById('searchCarousel');
+    const searchSub = document.getElementById('searchSub');
+
+    const trendingCarousel = document.getElementById('trendingCarousel');
+    const staffCarousel = document.getElementById('staffCarousel');
+    const favoritesCarousel = document.getElementById('favoritesCarousel');
+
+    const sheet = document.getElementById('sheet');
+    const sheetCover = document.getElementById('sheetCover');
+    const sheetTitle = document.getElementById('sheetTitle');
+    const sheetAuthor = document.getElementById('sheetAuthor');
+    const sheetYear = document.getElementById('sheetYear');
+    const sheetPages = document.getElementById('sheetPages');
+    const sheetDesc = document.getElementById('sheetDesc');
+    const saveFav = document.getElementById('saveFav');
+    const previewLink = document.getElementById('previewLink');
+    const closeSheet = document.getElementById('closeSheet');
+
+    // simple state
+    let currentBook = null;
+    const favoritesKey = 'bs_favorites_v1';
+    function getFavorites(){ try{ return JSON.parse(localStorage.getItem(favoritesKey))||[] }catch(e){ return [] } }
+    function setFavorites(list){ localStorage.setItem(favoritesKey, JSON.stringify(list)) }
+
+    /* -------------------------
+       RENDER HELPERS
+       ------------------------- */
+    function createCardFromInfo(info){
+      const title = info.title || 'Untitled';
+      const authors = info.authors ? info.authors.join(', ') : 'Unknown';
+      const thumb = info.imageLinks?.thumbnail?.replace('http:','https:') || '';
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.tabIndex = 0;
+      card.innerHTML = `
+        <img class="thumb" src="${thumb || placeholderThumb()}" alt="${escapeHtml(title)}">
+        <div class="meta">
+          <div class="title">${escapeHtml(title)}</div>
+          <div class="author">${escapeHtml(authors)}</div>
+        </div>`;
+      card.addEventListener('click', ()=> openSheet(info));
+      card.addEventListener('keypress', (e)=>{ if(e.key==='Enter') openSheet(info) });
+      return card;
+    }
+
+    function placeholderThumb(){
+      return 'data:image/svg+xml;utf8,' + encodeURIComponent(
+        `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="280"><rect width="100%" height="100%" fill="#0b0d17"/><text x="50%" y="50%" alignment-baseline="middle" text-anchor="middle" fill="#25303f" font-size="18">No cover</text></svg>`
+      );
+    }
+
+    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])) }
+
+    /* -------------------------
+       API
+       ------------------------- */
+    async function fetchBooks(q, opts={maxResults:12}){
+      try {
+        const url = `${API_BASE}?q=${encodeURIComponent(q)}&maxResults=${opts.maxResults||12}`;
+        const res = await fetch(url);
+        const json = await res.json();
+        return (json.items || []).map(i => i.volumeInfo || {});
+      } catch(e){
+        console.error('fetch error', e);
+        return [];
+      }
+    }
+
+    /* -------------------------
+       SEARCH HANDLING (debounced)
+       ------------------------- */
+    let debounceTimer = null;
+    function debounceSearch(handler, wait=400){
+      return (...args) => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(()=> handler(...args), wait);
+      };
+    }
+
+    const doSearch = debounceSearch(async ()=>{
+      const q = searchInput.value.trim();
+      if(!q) return;
+      searchSub.textContent = `Results for "${q}"`;
+      const items = await fetchBooks(q, {maxResults:16});
+      renderCarousel(searchCarousel, items);
+      searchRow.style.display = items.length ? 'block' : 'none';
+      // small auto-scroll to search row on mobile
+      if(window.innerWidth < 800) searchRow.scrollIntoView({behavior:'smooth'});
+    }, 450);
+
+    searchBtn.addEventListener('click', doSearch);
+    searchInput.addEventListener('input', doSearch);
+    searchInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter') doSearch() });
+
+    /* -------------------------
+       CAROUSEL RENDER & SCROLL CONTROLS
+       ------------------------- */
+    function renderCarousel(container, items){
+      container.innerHTML = '';
+      if(!items.length){
+        container.innerHTML = `<div class="empty">No items found</div>`;
+        return;
+      }
+      items.forEach(i => container.appendChild(createCardFromInfo(i)));
+    }
+
+    document.querySelectorAll('.arrow').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const targetId = btn.dataset.target;
+        const dir = btn.dataset.dir;
+        const row = document.getElementById(targetId);
+        const carousel = row.querySelector('.carousel');
+        const delta = (dir==='left') ? - (carousel.clientWidth * 0.6) : (carousel.clientWidth * 0.6);
+        carousel.scrollBy({left:delta, behavior:'smooth'});
+      });
+    });
+
+    /* -------------------------
+       DETAILS SHEET (open/close)
+       ------------------------- */
+    function openSheet(info){
+      currentBook = info;
+      sheetCover.src = info.imageLinks?.thumbnail?.replace('http:','https:') || placeholderThumb();
+      sheetTitle.textContent = info.title || 'No title';
+      sheetAuthor.textContent = (info.authors && info.authors.join(', ')) || 'Unknown author';
+      sheetYear.textContent = info.publishedDate ? String(info.publishedDate).split('-')[0] : 'N/A';
+      sheetPages.textContent = info.pageCount ? `${info.pageCount} pages` : '—';
+      sheetDesc.innerHTML = info.description ? sanitizeDescription(info.description) : 'No description available.';
+      previewLink.href = info.infoLink || '#';
+      previewLink.textContent = info.previewLink ? 'Preview' : 'More info';
+      // update save button text
+      const favs = getFavorites();
+      const exists = favs.some(f => f.id === info.industryIdentifiers?.[0]?.identifier || (f.title === info.title && f.authors && info.authors && f.authors.join()===(info.authors.join())));
+      saveFav.textContent = exists ? 'Saved' : 'Save to favorites';
+      saveFav.disabled = exists;
+      // show sheet
+      sheet.classList.add('open');
+      sheet.setAttribute('aria-hidden','false');
+      // trap focus lightly: focus close button
+      closeSheet.focus();
+    }
+
+    function closeSheetFunc(){ sheet.classList.remove('open'); sheet.setAttribute('aria-hidden','true'); currentBook = null }
+    closeSheet.addEventListener('click', closeSheetFunc);
+
+    // close on ESC
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeSheetFunc() });
+
+    /* -------------------------
+       FAVORITES
+       ------------------------- */
+    function saveCurrentToFavorites(){
+      if(!currentBook) return;
+      const favs = getFavorites();
+      // create lightweight identifier
+      const id = currentBook.industryIdentifiers?.[0]?.identifier || `${currentBook.title || ''}::${(currentBook.authors||[]).join(',')}`;
+      const exists = favs.some(f => f.id === id);
+      if(exists) return;
+      const record = {
+        id,
+        title: currentBook.title || 'Untitled',
+        authors: currentBook.authors || [],
+        thumbnail: currentBook.imageLinks?.thumbnail?.replace('http:','https:') || '',
+        infoLink: currentBook.infoLink || '',
+        savedAt: Date.now()
+      };
+      favs.unshift(record);
+      setFavorites(favs);
+      renderFavorites();
+      saveFav.textContent = 'Saved';
+      saveFav.disabled = true;
+    }
+    saveFav.addEventListener('click', saveCurrentToFavorites);
+
+    function renderFavorites(){
+      const favs = getFavorites();
+      favoritesRow.style.display = favs.length ? 'block' : 'none';
+      favoritesCarousel.innerHTML = '';
+      if(!favs.length) {
+        favoritesCarousel.innerHTML = `<div class="empty">No favorites yet — click Save on a book to add it here.</div>`;
+        return;
+      }
+      favs.forEach(f => {
+        const info = { title: f.title, authors: f.authors, imageLinks: { thumbnail: f.thumbnail }, infoLink: f.infoLink };
+        const card = createCardFromInfo(info);
+        // right-click remove
+        card.addEventListener('contextmenu', (e)=>{
+          e.preventDefault();
+          if(confirm('Remove this favorite?')) {
+            const remaining = favs.filter(x=>x.id !== f.id);
+            setFavorites(remaining);
+            renderFavorites();
+          }
+        });
+        favoritesCarousel.appendChild(card);
+      });
+    }
+
+    /* -------------------------
+       INITIAL CONTENT (trending & staff)
+       ------------------------- */
+    // trending queries: picked common popular books/topics
+    const TRENDING_QUERIES = ['best sellers 2024', 'fiction best sellers', 'self help', 'science fiction'];
+    const STAFF_QUERIES = ['to kill a mockingbird', '1984', 'sapiens', 'the alchemist'];
+
+    async function loadInitialRows(){
+      // trending: fetch first 10 items from combined queries
+      const trendingResults = [];
+      for(const q of TRENDING_QUERIES){
+        const items = await fetchBooks(q, {maxResults:6});
+        trendingResults.push(...items);
+        if(trendingResults.length >= 12) break;
+      }
+      renderCarousel(trendingCarousel, trendingResults.slice(0,12));
+
+      // staff picks
+      const staffResults = [];
+      for(const q of STAFF_QUERIES){
+        const items = await fetchBooks(q, {maxResults:3});
+        if(items[0]) staffResults.push(items[0]);
+      }
+      renderCarousel(staffCarousel, staffResults);
+
+      // favorites
+      renderFavorites();
+    }
+
+    /* -------------------------
+       NAV TABS
+       ------------------------- */
+    const tabs = document.querySelectorAll('.tab');
+    const favoritesRow = document.getElementById('favoritesRow');
+    const aboutRow = document.getElementById('aboutRow');
+    const trendingRow = document.getElementById('trendingRow');
+    const staffRow = document.getElementById('staffRow');
+
+    tabs.forEach(t => t.addEventListener('click', ()=>{
+      tabs.forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+      const key = t.dataset.tab;
+      // show/hide rows
+      searchRow.style.display = 'none';
+      trendingRow.style.display = 'none';
+      staffRow.style.display = 'none';
+      favoritesRow.style.display = 'none';
+      aboutRow.style.display = 'none';
+      if(key==='home'){ trendingRow.style.display='block'; staffRow.style.display='block'; }
+      else if(key==='favorites'){ renderFavorites(); favoritesRow.style.display='block' }
+      else if(key==='trending'){ trendingRow.style.display='block' }
+      else if(key==='about'){ aboutRow.style.display='block' }
+    }));
+
+    /* -------------------------
+       HELPERS
+       ------------------------- */
+    function sanitizeDescription(html){
+      // minimal sanitization: strip tags but preserve paragraphs
+      const tmp = document.createElement('div');
+      tmp.innerHTML = html;
+      // remove scripts
+      tmp.querySelectorAll('script').forEach(s=>s.remove());
+      // return text with paragraphs
+      return tmp.innerHTML;
+    }
+
+    /* -------------------------
+       BOOT
+       ------------------------- */
+    (function init(){
+      loadInitialRows();
+      // wire quick filter chips
+      document.querySelectorAll('.chip').forEach(chip=>{
+        chip.addEventListener('click', async ()=>{
+          const q = chip.dataset.filter;
+          searchInput.value = q;
+          const items = await fetchBooks(q, {maxResults:16});
+          renderCarousel(searchCarousel, items);
+          searchSub.textContent = `Results for "${q}"`;
+          searchRow.style.display = items.length ? 'block':'none';
+          // switch to search tab view
+          tabs.forEach(x=>x.classList.remove('active'));
+          document.querySelector('.tab[data-tab="home"]').classList.add('active');
+          trendingRow.style.display='none';
+          staffRow.style.display='none';
+        });
+      });
+
+      // keyboard shortcut: '/'
+      window.addEventListener('keydown', (e)=>{ if(e.key==='/' && document.activeElement !== searchInput){ e.preventDefault(); searchInput.focus(); } });
+
+      // render favorites at start
+      renderFavorites();
+    })();
+  </script>
+</body>
+</html>

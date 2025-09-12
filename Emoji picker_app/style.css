@@ -1,0 +1,108 @@
+/* *
+{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+} */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f0f0f0;
+}
+
+.container {
+  width: 350px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.input-box {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.input-box input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+}
+
+.input-box button {
+  margin-left: 8px;
+  padding: 10px;
+  cursor: pointer;
+  border: none;
+  background: #eee;
+  border-radius: 8px;
+  font-size: 18px;
+  transition: 0.2s;
+}
+
+.input-box button:hover {
+  background: #ddd;
+}
+
+.emoji-panel {
+  margin-top: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fafafa;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+.emoji-panel span {
+  font-size: 22px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.emoji-panel span:hover {
+  transform: scale(1.2);
+}
+
+.hidden {
+  display: none;
+}
+
+#emojiSearch {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+}
+
+.emoji-list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
