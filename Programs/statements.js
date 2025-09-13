@@ -1,147 +1,85 @@
-// // //Q1: Create a function that returns the last element in an array?
-// var element = [1, 2, 3, 4, 5, 6,7,8,9];
+// Q1: Create a function that returns the last element in an array?
+var element = [1, 2, 3, 4, 5, 6,7,8,9];
 
-// function lastElement(arr) {        //Formal parameters wo hote hain jo function ke definition me likhe jaate hain.
-//     return arr[arr.length - 1];
-//     // return arr.pop()              //hum pop method use kr sakte ha but wo original array ko modify kr deta ha 
-// }
+function lastElement(arr) {
+    return arr[arr.length - 1];
+    // return arr.pop()   // hum pop method bhi use kar sakte hain, lekin wo array ko modify kar deta hai
+}
 
-// console.log(lastElement(element)); //9  /Actual parameters (arguments) wo hote hain jo function ko call karte waqt pass kiye jaate hain.
-// console.log(element)              // [1,2,3,4,5,6,7,8]
-
-
-
-// // Q2: Find the combination of two arrays?
-// let arr1=[1,2,3,4,5]
-// let arr2=[5,6,7,8,9]
-// let combo=arr1.concat(arr2)
-// // niche modern method ha spread operator wala
-// // let combo=[...arr1,...arr2]
-// console.log(combo)
+console.log(lastElement(element)); 
+console.log(element);              
 
 
-// //Q3: Generate a random integer between 0 and 18
-// [0,1] is ka matlab  ha ka 0 aur 1 k center wali value milay gi 1 kabi nai milay ga
-
-// console.log(Math.floor(Math.random()*19))          // math.floor is liye likha ha k hum integer chahiye na k points me  aur math.random* 19 is liye likha ha kue k humey 0 se 18 tak value chahiye 19 add na ho
-
-
-// Differnece between floor, seil and round
-// Math.floor(4.7) → 4 → hamesha neeche round karta hai.
-
-// Math.ceil(4.2) → 5 → hamesha upar round karta hai.
-
-// Math.round(4.5) → 5 aur Math.round(4.4) → 4 → 0.5 ya zyada ho to upar, warna neeche.
+// Q2: Find the combination of two arrays?
+let arr1=[1,2,3,4,5]
+let arr2=[5,6,7,8,9]
+let combo=arr1.concat(arr2)
+// let combo=[...arr1,...arr2]   // modern method
+console.log(combo)
 
 
-// //  Q4: Write a function that takes an array combining both numbers nad strings, and returns a new array containing only the string values?
-// let arr=[1,2,3,4,5,"nouman","ali"]
-// let result=arr.filter((element)=>
-// {
-//     // console.log(element)        //1,2,3,4,5,"nouman","ali"
-//     if(typeof element === "string")
-//     {
-//         return true
-//     }
-//     else
-//     {
-//         return false
-//     }
-// })
-// console.log(result)
-
-// //Q5: Find the maximum number in the array?
-// let array=[1,2,3,4,5]
-// console.log(Math.max(...array))
+// Q3: Generate a random integer between 0 and 18
+console.log(Math.floor(Math.random()*19))          
 
 
-// //Q6: Write a function that returns the length of a given object(number of keys)
-// let obj=
-// {
-//     name: "Nouman",
-//     age: 21,
-//     city: "Faisalabad",
-//     CGPA: "3.53"
-// }
-// console.log(Object.keys(obj).length)       //[ 'name', 'age', 'city', 'CGPA' ] length 4
-// console.log(Object.values(obj).length)     //[ 'Nouman', 21, 'Faisalabad', '3.53' ]  length 4
+// Q4: Filter out only string values from an array
+let arr=[1,2,3,4,5,"nouman","ali"]
+let result=arr.filter(element => typeof element === "string")
+console.log(result)
 
 
-// //Q7: In an array of objects filter out those objects which have gender's value male?
-// let array=[
-//     {
-//         name:"Nouman",
-//         city: "Faisalabad",
-//         gender:"Male"
-//     },
-//     {
-//         name:"Ali",
-//         city:"Lahore",
-//         gender:"Male"
-//     },
-//     {
-//         name:"Ayesha",
-//         city:"Islamabad",
-//         gender:"Female"
-//     },
-//     {
-//         name:"Fatima",
-//         city:"Karachi",
-//         gender:"Female"
-//     }
-// ]
-// let result=array.filter(obj=>
-// {
-//     return obj.gender ==="Male"
-// }
-// )
-// console.log(result)             //     [
-//   { name: 'Nouman', city: 'Faisalabad', gender: 'Male' },
-//   { name: 'Ali', city: 'Lahore', gender: 'Male' }
-//    ]
-
-// //Q8: Give an array of strings, return a new array where all strings are in uppercase.
-// let array=["Ali","Nouman","usman","hamza"]
-// let result=array.map(element=>
-// {
-//     return element.toUpperCase()
-// }
-// )
-// console.log(result)
-
-// //Q9: Checks if an object is empty or not?
-// let obj=
-// {
-//     name:"Nouman",
-//     city:"FSD",
-//     CGPA: "3.53"
-// }
-// console.log(Object.keys(obj).length>0)
-
-// //Q10: Create an array of numbers and double each value using map?
-// let array=[1,2,3,4,5]
-// let double=array.map(num=>
-// {
-//     return num*2
-// }
-// )
-// console.log(double)
-
-// //Q11: Convert an array of strings into a single comma-separated string?
-// let arrays=["nouman","ali","usman","hamza","bilal"]
-// console.log( typeof arrays.join(","))                   // Question me comma se kaha ha is liye hum join k under string me wo likha ga
+// Q5: Find the maximum number in the array
+let array1=[1,2,3,4,5]
+console.log(Math.max(...array1))
 
 
-// Q12: Write a function to flatten a nested array(one level deep)=> [1,[2,3],4]=>[1,2,3,4]]
+// Q6: Return the number of keys in an object
+let obj1={
+    name: "Nouman",
+    age: 21,
+    city: "Faisalabad",
+    CGPA: "3.53"
+}
+console.log(Object.keys(obj1).length)
+console.log(Object.values(obj1).length)
 
-let arr=[1,2,3,4,['a','b','c','d'],5,6]
+
+// Q7: Filter out objects with gender === "Male"
+let array2=[
+    {name:"Nouman", city:"Faisalabad", gender:"Male"},
+    {name:"Ali", city:"Lahore", gender:"Male"},
+    {name:"Ayesha", city:"Islamabad", gender:"Female"},
+    {name:"Fatima", city:"Karachi", gender:"Female"}
+]
+let result2=array2.filter(obj=>obj.gender==="Male")
+console.log(result2)
 
 
-console.log(arr[4])     // [ 'a', 'b', 'c', 'd' ]
-console.log(arr.flat(1))                    //[
-//   1,   2,   3,   4, 'a',
-//   'b', 'c', 'd', 5, 6
-// ]
+// Q8: Convert array of strings to uppercase
+let array3=["Ali","Nouman","usman","hamza"]
+let result3=array3.map(element=>element.toUpperCase())
+console.log(result3)
+
+
+// Q9: Check if an object is empty
+let obj2={ name:"Nouman", city:"FSD", CGPA:"3.53" }
+console.log(Object.keys(obj2).length>0)
+
+
+// Q10: Double each value in array
+let array4=[1,2,3,4,5]
+let double=array4.map(num=>num*2)
+console.log(double)
+
+
+// Q11: Convert array of strings into a single comma-separated string
+let arrays=["nouman","ali","usman","hamza","bilal"]
+console.log(arrays.join(","))
+
+// Q12: Flatten a nested array (one level deep)
+let arr5=[1,2,3,4,['a','b','c','d'],5,6]
+console.log(arr5.flat(1))
+
 
 // Q12: Write a function that checks all the elements in an array are numbers?
 function allNumbers(arr) {
