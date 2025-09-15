@@ -81,7 +81,7 @@ let arr5=[1,2,3,4,['a','b','c','d'],5,6]
 console.log(arr5.flat(1))
 
 
-// Q12: Write a function that checks all the elements in an array are numbers?
+// Q13: Write a function that checks all the elements in an array are numbers?
 function allNumbers(arr) {
   return arr.every(element => typeof element === "number");
 }
@@ -91,7 +91,7 @@ console.log(allNumbers([1, 2, 3, 4]));      // true
 console.log(allNumbers([1, "2", 3, 4]));   // false
 
 
-// Q 13: Build a simple aPrime() function to check if a number is prime?
+// Q 14: Build a simple aPrime() function to check if a number is prime?
 function aPrime(num) {
   if (num <= 1) return false;   // 1 or negative numbers prime nahi hote
   
@@ -108,3 +108,18 @@ console.log(aPrime(2));   // true
 console.log(aPrime(17));  // true
 console.log(aPrime(18));  // false
 console.log(aPrime(1));   // false
+
+
+//Q13: Create a function that removes the duplicate values from an array?
+function removeDuplicates(arr) {
+  return [...new Set(arr)];
+}
+
+// Example usage:
+console.log(removeDuplicates([1,2,3,4,2,3,5,1,6]));
+// Output: [1, 2, 3, 4, 5, 6]
+//🔹 new Set(arr) → array ko Set me convert kar deta hai (Set automatically duplicates hata deta hai).
+//🔹 [...new Set(arr)] → Set ko dobara array me badal deta hai.
+
+
+
