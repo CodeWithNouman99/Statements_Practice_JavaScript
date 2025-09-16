@@ -110,7 +110,7 @@ console.log(aPrime(18));  // false
 console.log(aPrime(1));   // false
 
 
-//Q13: Create a function that removes the duplicate values from an array?
+//Q15: Create a function that removes the duplicate values from an array?
 function removeDuplicates(arr) {
   return [...new Set(arr)];
 }
@@ -120,6 +120,48 @@ console.log(removeDuplicates([1,2,3,4,2,3,5,1,6]));
 // Output: [1, 2, 3, 4, 5, 6]
 //🔹 new Set(arr) → array ko Set me convert kar deta hai (Set automatically duplicates hata deta hai).
 //🔹 [...new Set(arr)] → Set ko dobara array me badal deta hai.
+
+
+//Q 16:  What is the difference B/w ParseInt and Number?
+console.log(typeof parseInt("123.456"))     // Number
+console.log(typeof Number("123.456"))        // Number
+
+//Q17: Why does 0.1 + 0.2!=0.3 in Js?
+
+console.log(0.1 + 0.2 === 0.3)        // False
+console.log(0.1 + 0.2 !== 0.3)         // true
+console.log(0.1 + 0.2 != 0.3)        // true
+
+//Q 18: Explain floating point percision issues in JavaScript?
+Answer: Floating point precision issue JavaScript me is liye hoti hai kyunki JS numbers ko internally 64-bit floating point (IEEE 754 standard) me store karta hai. Is format ki limitation ki wajah se decimal numbers hamesha exact store nahi hote, balki unka approximate representation hota hai. Isi wajah se kabhi kabhi unexpected results milte hain, jaise:
+console.log(0.1 + 0.2);   // 0.30000000000000004
+console.log(0.3 === 0.1 + 0.2);  // false
+
+
+//Q19: How would you handle high precision decimal math in Js?
+Answer: JavaScript floating-point numbers cause precision issues, so for high-precision decimal math we either scale numbers as integers (like paisa instead of rupees) or use libraries such as decimal.js, big.js, or bignumber.js that handle accurate decimal calculations.
+
+// Q20: Difference between slice() and splice()
+
+// slice(): Returns a portion of the array without modifying the original
+let arr1 = [1, 2, 3, 4, 5];
+let sliced = arr1.slice(1, 4); 
+console.log("Slice result:", sliced);   // [2, 3, 4]
+console.log("Original after slice:", arr1); // [1, 2, 3, 4, 5]
+
+// splice(): Modifies the array by adding/removing elements
+let arr2 = [1, 2, 3, 4, 5];
+let spliced = arr2.splice(1, 2, 99, 100);
+console.log("Splice removed:", spliced); // [2, 3]
+console.log("Array after splice:", arr2); // [1, 99, 100, 4, 5]
+
+
+/*Important Note:
+1st difference- Slice apka string and array dono k sath kam krta ha but splice apka sirf array ka sath kam krta ha.
+2nd difference- slice apke original arary,string  me koi change nai krta but splice apke original array me change krdeta ha
+3rd differnec - slice apka sirf tukra kat kr de raha hota ha lejin spilce apka tukra b kat kr de sakta ha sath hi add b kr sakta h elements ko sath hi delete bhi kr sakta ha
+*/
+
 
 
 
